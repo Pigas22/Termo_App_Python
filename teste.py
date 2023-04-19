@@ -1,3 +1,5 @@
-from comandos import funcionalidade
+from comandos.funcionalidade import adicionar_palavras, verifica_palavra
 
-funcionalidade.adicionar_palavras()
+adicionar_palavras()
+
+# verifica_palavra(palavra)

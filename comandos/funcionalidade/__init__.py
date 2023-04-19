@@ -1,33 +1,76 @@
+def criar_arquivo(tamanho):
+  try:
+    file = open(f'comandos/funcionalidade/banco_de_palavras/tamanho_{tamanho}.txt', 'x')
+    file.close()
+    return 'Arquivo criado!'
+    
+  except FileExistsError:
+    return 'Arquivo já existente!'
+
+
+# -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+def verifica_palavra(palavra, tamanho):
+  lines = []
+  with open(f'comandos/funcionalidade/banco_de_palavras/tamanho_{tamanho}.txt', 'r') as txt_file:
+    lines = txt_file.readlines()
+
+  for line in lines:
+    if line == lines[-1]:
+      if palavra in lines:
+        return True
+        break
+
+      else:
+        return False
+        break
+
+    else:
+      if (palavra+'\n') in lines:
+        return True
+        break
+
+      else:
+        return False
+        break
+
+
+# -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 def adicionar_palavras():
-  from time import sleep
   while True:
-    nova_palavra = str(input('Digite a palavra para ser adicionada: ')).upper().strip()
+    nova_palavra = str(input('Digite a palavra para ser adicionada: ')).lower().strip()
+    
+    tamanho = len(nova_palavra)
 
+    criar_arquivo(tamanho)
+    
+    if not verifica_palavra(nova_palavra, tamanho):
+      try:
+        txt_file = open(f'comandos/funcionalidade/banco_de_palavras/tamanho_{tamanho}.txt', 'a')
+        txt_file.write(nova_palavra+'\n')
+          
+      finally:
+        txt_file.close()
 
-    for palavra in txt_file:
-      txt_file = open('comandos/funcionalidade/banco_de_palavras.txt', 'r')
-      if nova_palavra == palavra:
-        print('[REPETIDO]: Essa palavra já estava adicionada!')
-          
-      else:      
-        txt_file = open('comandos/funcionalidade/banco_de_palavras.txt', 'a')
-        try:
-          txt_file.write('\n' + nova_palavra)
-          
-        finally:
-          txt_file.close()
+    else:
+      print('ERROR: palavra já adicionada anteriormente!')
     
 
+
     while True:
-      continuar = str(input('Deseja continuar? [S/N] ')).upper().split()[0]
+      continuar = str(input('Deseja continuar? [S/N] ')).lower().split()[0]
      
-      if continuar == 'N' or continuar == 'S':
+      if continuar == 'n' or continuar == 's':
         break
       
       else:
         print('[ERROR]: Por favor, Digite novamente!!')
 
-    if continuar == 'N':
+    if continuar == 'n':
       break
     
+
+# -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+
+
 
